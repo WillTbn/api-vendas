@@ -2,8 +2,8 @@ import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColu
 
 @Entity('products')
 class Product {
-    @PrimaryGeneratedColumn('increment')
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
 
     @Column()
     name:string;
