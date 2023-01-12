@@ -29,7 +29,7 @@ class UpdateProductService {
         product.price = price
         product.quantity = quantity
 
-
+        await productRepository.save(product)
 
         return product
 

@@ -19,7 +19,6 @@ class CreateProductService {
         if(ProductExists){
             throw new AppError('There is already one product with this name');
         }
-
         const product = productRepository.create({
             name,
             price,
