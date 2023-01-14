@@ -2,17 +2,17 @@ import 'reflect-metadata';
 import Express, { NextFunction, Request, Response } from "express";
 import 'express-async-errors';
 import cors from 'cors';
-import {errors} from 'celebrate'
+import {errors} from 'celebrate';
 import routes from './routes';
 import AppError from "../errors/AppError";
-import '@shared/typeorm'
-
+import '@shared/typeorm';
+import upload from '@config/upload';
 
 const app = Express();
 
 app.use(cors());
 app.use(Express.json());
-
+app.use('/files', Express.static(upload.directory))
 app.use(routes);
 app.use(errors());
 
