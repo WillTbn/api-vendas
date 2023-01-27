@@ -1,0 +1,38 @@
+import AppError from "@shared/errors/AppError";
+import { getCustomRepository } from "typeorm";
+import { hash } from "bcryptjs";
+import Customer from "../entities/Customer";
+import CustomersRepository from "../repositories/CustomersRepository";
+
+
+interface IRequest{
+    name: string
+    email: string
+}
+
+class CreateCustomerService {
+
+    public async execute({name, email}: IRequest): Promise<Customer>{
+
+        const customerRepository = getCustomRepository(CustomersRepository)
+
+        const emailExists = await customerRepository.findByEmail(email)
+
+        if(emailExists){
+          throw new AppError('Email address already used.');
+        }
+
+        const customer = customerRepository.create({
+            name,
+            email
+        })
+
+        await customerRepository.save(customer);
+
+        return customer;
+
+    }
+
+}
+
+export default CreateCustomerService
