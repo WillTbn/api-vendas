@@ -18,10 +18,10 @@ class CreateOrderService {
 
     public async execute({customer_id, products}: IRequest): Promise<Order>{
         const ordersRepository = getCustomRepository(OrdersRepository);
-        const customerRepository = getCustomRepository(CustomersRepository);
+        const customersRepository = getCustomRepository(CustomersRepository);
         const productRepository = getCustomRepository(ProductRepository);
 
-        const customerExists = await customerRepository.findById(customer_id);
+        const customerExists = await customersRepository.findById(customer_id);
 
         if(!customerExists){
             throw new AppError('Coult not find any customer with the given id.');
@@ -43,7 +43,7 @@ class CreateOrderService {
             throw new AppError(`Could not find product ${checkInexistentsProducts[0].id}.`);
         }
 
-        const  quantityAvailable = products.filter(
+        const quantityAvailable = products.filter(
             product =>
             existsProdutcts.filter(p => p.id === product.id)[0].quantity < product.quantity,
         )
@@ -72,7 +72,7 @@ class CreateOrderService {
         const updatedProductQuantity = order_products.map(
             product => ({
                 id: product.product_id,
-                quantity: existsProdutcts.filter(p => p.id === product.id)[0].quantity - product.quantity
+                quantity: existsProdutcts.filter(p => p.id === product.product_id)[0].quantity - product.quantity
             })
         );
 

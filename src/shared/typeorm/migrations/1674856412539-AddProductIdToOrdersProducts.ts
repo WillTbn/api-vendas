@@ -18,7 +18,7 @@ export class AddProductIdToOrdersProducts1674856412539 implements MigrationInter
             new TableForeignKey({
                 name:'OrdersProductsProduct',
                 columnNames:['product_id'],
-                referencedTableName:'product',
+                referencedTableName:'products',
                 referencedColumnNames:['id'],
                 onDelete:'SET NULL'
             })
